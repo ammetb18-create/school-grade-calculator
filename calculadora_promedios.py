@@ -1,6 +1,29 @@
-# calculadora_promedios.py
-
 def ingresar_calificaciones():
+    materias = []
+    calificaciones = []
+
+    while True:
+        nombre = input("Ingrese el nombre de la materia (o presione Enter para terminar): ").strip()
+        if nombre == "":
+            break
+
+        while True:
+            try:
+                nota = float(input(f"Ingrese la calificación de {nombre} (0 a 10): ").strip())
+                if 0.0 <= nota <= 10.0:
+                    break
+                print("La calificación debe estar en el rango de 0 a 10.")
+            except ValueError:
+                print("Entrada inválida. Por favor ingrese un número para la calificación.")
+
+        materias.append(nombre)
+        calificaciones.append(nota)
+
+        continuar = input("¿Desea ingresar otra materia? (s/n): ").strip().lower()
+        if continuar != "s":
+            break
+
+    return materias, calificaciones
     """
     Solicita al usuario el número de materias y luego pide nombre y calificación (0 a 10).
     Retorna dos listas paralelas: (materias, calificaciones)
@@ -88,22 +111,26 @@ def encontrar_extremos(calificaciones):
 
 
 def main():
-    umbral = 5.0
+   materias, calificaciones = ingresar_calificaciones()
 
-    materias, calificaciones = ingresar_calificaciones()
-    promedio = calcular_promedio(calificaciones)
-    aprobadas, reprobadas = determinar_estado(calificaciones, umbral)
-    idx_max, idx_min = encontrar_extremos(calificaciones)
+if len(materias) == 0:
+    print("No se ingresó ninguna materia. No hay datos para calcular promedios.")
+    print("Gracias por usar la calculadora de promedios. ¡Hasta luego!")
+    return
 
-    print("\n--- Resumen de Materias y Calificaciones ---")
-    for i in range(len(materias)):
-        print(f"{i+1}. {materias[i]}: {calificaciones[i]}")
+    print(print("\n--- Materias aprobadas ---")
+if aprobadas:
+    for i in aprobadas:
+        print(f"- {materias[i]}: {calificaciones[i]}")
+else:
+    print("Ninguna")
 
-    print(f"\nPromedio general: {promedio:.2f}")
-
-    print("\nMaterias aprobadas (índices):", aprobadas)
-    print("Materias reprobadas (índices):", reprobadas)
-
+print("\n--- Materias reprobadas ---")
+if reprobadas:
+    for i in reprobadas:
+        print(f"- {materias[i]}: {calificaciones[i]}")
+else:
+    print("Ninguna")
     # Mostrar extremos
     if idx_max is not None and idx_min is not None:
         print(f"\nCalificación más alta: {materias[idx_max]} (índice {idx_max}) -> {calificaciones[idx_max]}")
